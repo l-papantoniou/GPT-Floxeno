@@ -1,13 +1,16 @@
 from langchain import FAISS
 from transformers import GPT2TokenizerFast
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-
+from dotenv import load_dotenv
 import textract
 from langchain.embeddings import OpenAIEmbeddings
 
 import os
 
-os.environ['OPENAI_API_KEY'] = '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'
+load_dotenv()
+api_key = os.getenv('API_KEY')
+
+os.environ['OPENAI_API_KEY'] = api_key
 
 
 def process_pdf(pdf_file_path: str):
