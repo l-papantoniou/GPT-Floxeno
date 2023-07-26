@@ -1,13 +1,17 @@
 import os
 import time
-
+from dotenv import load_dotenv
 import streamlit as st
 from langchain.chat_models import ChatOpenAI
 
 import constants
 import vector
 
-os.environ['OPENAI_API_KEY'] = constants.APIKEY
+load_dotenv()
+
+api_key = os.getenv('API_KEY')
+
+os.environ['OPENAI_API_KEY'] = api_key
 
 # documents to extract info from
 source_documents = "source_documents/syrros.txt"
@@ -35,12 +39,10 @@ to_date = col3.date_input('Select end date')
 # interests prompt
 prompt = st.text_input('What are you interested in mate?')
 
-prompt_template = "Act as a travel agent. I am planning my trip to Syrros island in Greece. Provide me with the best " \
-                  f"recommendations based on my interests. We will be {number_of_travelers} people." \
+prompt_template = "Act as a travel agent, keep a funny, friendly approach. Provide me with the best recommendations " \
+                  f"for my trip in Syrros island. We will be {number_of_travelers} people." \
                   f"We will be in Syrros from {from_date} to {to_date}." \
-                  f" We are  interested in {prompt}." \
-                  f"Keep a funny, friendly approach."
-
+                  f"We are  interested in {prompt}."
 if st.button('Search'):
     st.session_state['submit'] = True
 

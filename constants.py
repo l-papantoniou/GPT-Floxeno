@@ -14,4 +14,3 @@ CHROMA_SETTINGS = Settings(
     anonymized_telemetry=False
 )
 
-APIKEY = "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"
