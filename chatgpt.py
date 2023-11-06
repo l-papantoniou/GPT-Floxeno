@@ -1,10 +1,10 @@
 import os
 import time
-from dotenv import load_dotenv
+
 import streamlit as st
+from dotenv import load_dotenv
 from langchain.chat_models import ChatOpenAI
 
-import constants
 import vector
 
 load_dotenv()
@@ -25,10 +25,13 @@ st.title("🦜️🔗 GPT-Filoxeno 🌴🌞")
 if 'submit' not in st.session_state:
     st.session_state['submit'] = False
 
-col1, col2, col3 = st.columns(3)
+col1, col2, col3, col4, col5 = st.columns(5)
 
-# number of travelers
-number_of_travelers = col1.slider('Number of travelers', min_value=0, max_value=7, step=1)
+# default destination
+default_destination = "Syrros"
+
+# destination
+destination = col1.text_input('Destination', default_destination)
 
 # from date
 from_date = col2.date_input('Select start date')
@@ -36,13 +39,18 @@ from_date = col2.date_input('Select start date')
 # to date
 to_date = col3.date_input('Select end date')
 
+# number of travelers
+number_of_travelers = col4.slider('Number of travelers', min_value=1, max_value=4, step=1)
+
+# number of rooms
+number_of_rooms = col5.slider('Number of rooms', min_value=1, max_value=4, step=1)
+
 # interests prompt
-prompt = st.text_input('What are you interested in mate?')
+# prompt = st.text_input('What are you interested in mate?')
 
 prompt_template = "Act as a travel agent, keep a funny, friendly approach. Provide me with the best recommendations " \
-                  f"for my trip in Syrros island. We will be {number_of_travelers} people." \
-                  f"We will be in Syrros from {from_date} to {to_date}." \
-                  f"We are  interested in {prompt}."
+                  f"for my trip in {destination} island. We will be {number_of_travelers} people." \
+                  f"We will be in {destination} from {from_date} to {to_date}."
 if st.button('Search'):
     st.session_state['submit'] = True
 
